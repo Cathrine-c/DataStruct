@@ -1,74 +1,51 @@
-//package java_0124;
-//
-//import java.util.ArrayDeque;
-//import java.util.ArrayList;
-//import java.util.LinkedList;
-//import java.util.Queue;
-//
-//public class MyQueue {
-//    static class Node{
-//        int val;
-//        Node next;
-//
-//
-//        public Node(int val) {
-//            this.val = val;
-//        }
-//    }
-//
-//    /**
-//     * 基于链表实现队列
-//     */
-//
-//    private Node head = null;//表头
-//    private Node tail = null;//表尾
-//
-//
-//    //入队列
-//    public void offer(int val){
-//
-//        Node newNode = new Node(val);
-//        if (head == null) {
-//            head = newNode;
-//            tail = newNode;
-//            return;
-//        }
-//
-//        tail.next = newNode;
-//        tail = tail.next;
-//
-//    }
-//
-//    //出队列
-//    public Integer poll(){
-//        //如果当前队列为空
-//        if (head == null) {
-//            return null;
-//        }
-//
-//        int ret = head.val;
-//        head = head.next;
-//        if (head == null) {
-//            tail=null;
-//        }
-//        return ret;
-//
-//    }
-//
-//    //取队首元素
-//    public Integer peek(){
-//        if (head == null) {
-//            return null;
-//        }
-//        return head.val;
-//    }
-//
-//
-//    Queue<Integer> queue = new ArrayDeque<>();
-//
-//
-//
-//
-//
-//
-//}
+package InterviewImportant.DS;
+
+import java.util.Stack;
+
+public class MyQueue {
+
+    //两个栈实现一个队列
+    private Stack<Integer> stack1 ;
+    private Stack<Integer> stack2 ;
+
+    public MyQueue() {
+
+        stack1 = new Stack<>();
+        stack2 = new Stack<>();
+    }
+
+
+    public void push(int x) {
+
+        stack1.push(x);
+    }
+
+
+    public Integer pop() {
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+       return stack2.pop();
+    }
+
+
+    public Integer peek() {
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.push(stack1.pop());
+            }
+        }
+        return stack2.peek();
+    }
+
+
+    public boolean empty() {
+        return stack1.isEmpty()&&stack2.isEmpty();
+    }
+
+
+
+
+}
