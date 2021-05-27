@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadPoolTest {
 
+
     public static void main(String[] args) {
 
         ThreadPoolExecutor pool = new ThreadPoolExecutor(
@@ -46,8 +47,8 @@ public class ThreadPoolTest {
                  */
 
         );
-        //线程池创建之后，只要有任务就自动执行
 
+        //线程池创建之后，只要有任务就自动执行
         for(int i =0;i<1000;i++){
             //线程池执行任务：execute、submit-->提交执行一个任务
            pool.execute(new Runnable() {

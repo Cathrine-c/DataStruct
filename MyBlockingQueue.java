@@ -33,6 +33,7 @@ public class MyBlockingQueue<T> {
         while (size == queue.length) {
             this.wait();
         }
+
         queue[putIndex] = e;
 
         putIndex = (putIndex+1)%queue.length;
@@ -53,6 +54,7 @@ public class MyBlockingQueue<T> {
         takeIndex = (takeIndex+1)%queue.length;
         size--;
         notifyAll();
+
         return t;
     }
 
