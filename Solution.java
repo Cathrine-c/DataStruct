@@ -1,106 +1,183 @@
-package java_0317;
+package InterviewImportant.Arithmiy;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
 
 public class Solution {
 
-    public static int calcSimilarity(String name1, String name2) {
-        if(name1.length()==0&&name2.length()==0){
-            return 0;
+    public static boolean isSame(int[] array) {
+        Arrays.sort(array);
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] == array[i + 1]) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+    public static void main1(String[] args) {
+        int[] array = {1, 2, 5, 3, 8, 6};
+        System.out.println(isSame(array));
+    }
+
+
+    public static boolean isPailindrome(int x) {
+        String s = "";
+
+        if (x < 0) {
+            return false;
         }
 
-        String[] str1 = name1.split(" ");
-        String[] str2 = name2.split(" ");
+        if (x < 10) {
+            return true;
+        }
 
-        int i=0;
-        int j=0;
-        String s = "";
-        while(i<str1.length&&j<str2.length){
-            String ss = shareLongestString1(str1[i],str2[j]);
-            if (ss!=null){
-                s+=ss;
+        while (x > 0) {
+            int n = x % 10;
+            s += n;
+            x /= 10;
+        }
+
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
             }
             i++;
-            j++;
+            j--;
         }
+        return true;
+    }
 
-        int k =0;
-        int l= 0;
 
-        for(int m =0;m<name1.length();m++){
-            if(name1.charAt(m)==' '){
-                continue;
+    public static void main2(String[] args) {
+        int x = 1221;
 
-            }else{
-                k+=name1.charAt(m);
+        System.out.println(isPailindrome(x));
+    }
+
+
+    public static void reverseMatrix(int[][] matrix) {
+        int[][] m = new int[matrix.length][matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                m[j][i] = matrix[matrix.length - i - 1][j];
+
             }
         }
 
-        for(int n =0;n<name2.length();n++){
-            if(name2.charAt(n)==' '){
-                continue;
-
-            }else{
-                l+=name2.charAt(n);
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m.length; j++) {
+                System.out.print(m[i][j] + ",");
             }
         }
+    }
 
-        int c = 0;
-        for(int t =0;t<s.length();t++){
-            if(s.charAt(t)==' '){
-                continue;
 
-            }else{
-                c+=s.charAt(t);
-            }
-        }
+    public static void main4(String[] args) {
+        int[][] ma = {{1, 2, 3,0}, {4, 5, 6,22}, {7, 8, 11,9},{33,44,55,66}};
 
-        return k+l-2*c;
+        reverseMatrix(ma);
+
+    }
+
+
+
+    public static void main7(String[] args) {
+//        int[] a = {1,3,6,3,1,6,7};
+//        System.out.println(SingleNum(a));
+
+//        String s = "12334567";
+//        int x = Integer.parseInt(s);
+//        System.out.println(x);
+
+        findMygic();
 
 
     }
 
-    public static String shareLongestString1(String s1,String s2){
 
-        int Lindex1 = 0;
-        int LMax = 0;
-        for(int i=0;i<s1.length();i++){
-            for(int j=0;j<s2.length();j++){
-                int m = i;
-                int n = j;
-                int l=0;
-                while(m<s1.length()&&n<s2.length()&&s1.charAt(m)==s2.charAt(n)&&m==n){
-                    m++;
-                    n++;
-                    l++;
 
+    public static void findMygic(){
+        String s = "";
+
+        for(int i=12345;i<98765;i++){
+            int a=i/10000;
+            s+=a;
+            int b=i/1000%10;
+            s+=b;
+            int c=i/100%10;
+            s+=c;
+            int d=i/10%10;
+            s+=d;
+            int e=i%10;
+            s+=e;
+
+            if(a==b||a==c||a==d||a==e||b==c||b==d||b==e||c==d||c==e||d==e){
+                s="";
+                continue;
+            }
+
+
+            String str = "";
+            for (int k=s.length()-1;k>=0;k--){
+                str+=s.charAt(k);
+            }
+
+            int m = Integer.parseInt(s);
+            int n = Integer.parseInt(str);
+
+            for (int j=0;j<10;j++){
+                if (m*j==n){
+                    System.out.println(m);
                 }
+            }
 
-                LMax = LMax>l?LMax:l;
-                Lindex1 = m;
+            s="";
+            str="";
+
+        }
+    }
+
+
+    public static void main(String[] args) {
+
+        int[]  array = {1,1,4,5,6,6,5,7,4};
+        System.out.println(SingleNum(array));
+
+    }
+
+    //找到只出现一次的数字
+    public static int SingleNum(int[] array){
+        Map<Integer,Integer> map = new HashMap<>();
+
+        for (int i=0;i<array.length;i++){
+            Integer x = map.get(array[i]);
+            if (!map.containsKey(array[i])){
+                map.put(array[i],1);
+
+            }else {
+                map.put(array[i],x+1);
+
             }
         }
-        if(LMax==0){
-            return null;
+
+        int v =0;
+        for (Map.Entry<Integer,Integer> entry:map.entrySet()){
+
+            if (entry.getValue() == 1) {
+                 v = entry.getKey();
+            }
         }
 
-
-        return s1.substring(Lindex1-LMax,Lindex1);
+        return v;
     }
-
-
-
-    public static void main(String[] args){
-        Scanner in = new Scanner(System.in);
-        while (in.hasNextLine()) {
-            String name1 = in.nextLine();
-            String name2 = in.nextLine();
-
-            int sum = calcSimilarity(name1, name2);
-            System.out.println(sum);
-        }
-    }
-
-
 
 }
