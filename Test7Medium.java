@@ -27,6 +27,31 @@ public class Test7Medium {
 
     //编写一段程序来查找第 n 个超级丑数。
     //超级丑数是指其所有质因数都是长度为 k 的质数列表 primes 中的正整数。
+    public int NthSuperUglyNumber(int n,int[] primes){
 
-    
+        int[] countArray = new int[primes.length];
+
+        int[] dp = new int[n];
+
+        for (int i=1;i<n;i++){
+
+            dp[i] = Integer.MAX_VALUE;
+            for (int y=0;y<countArray.length;y++){
+                dp[i] = Math.min(dp[i],dp[countArray.length]);
+
+            }
+            for (int z = 0;z<primes.length;z++){
+                if (dp[i]% primes[z]==0){
+                    countArray[z]++;
+
+                }
+            }
+        }
+        return dp[n-1];
+        
+    }
+
+
+
+
 }
