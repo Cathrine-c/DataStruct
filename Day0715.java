@@ -1,6 +1,18 @@
 package InterviewImportant.jianzhi;
 
-import java.util.Arrays;
+import javax.swing.text.html.parser.Entity;
+import java.util.*;
+
+
+
+class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+  }
+
+
 
 public class Day0715 {
 
@@ -58,7 +70,7 @@ public class Day0715 {
     }
 
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
 
         int[] arr = {4,3,2,8,7,5,6};
         heapSort(arr);
@@ -116,6 +128,74 @@ public class Day0715 {
         }
 
     }
+
+    public int majorityElement(int[] nums) {
+
+        Map<Integer,Integer> map = new HashMap<>();
+
+        for(int i=0;i<nums.length;i++){
+
+            Integer x = map.get(nums[i]);
+            if(!map.containsKey(nums[i])){
+
+                map.put(nums[i],1);
+            }else{
+                map.put(nums[i],x+1);
+
+            }
+
+        }
+
+        for(Map.Entry<Integer,Integer> entry:map.entrySet()){
+
+            if(entry.getValue()>nums.length/2){
+                return entry.getKey();
+            }
+        }
+        return -1;
+
+
+
+    }
+
+    public static void main(String[] args) {
+
+
+        Queue<Integer> queue = new LinkedList<>();
+
+    }
+
+
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            TreeNode node = queue.poll();
+            List<Integer> list = new ArrayList<>();
+            while(size>0){
+                list.add(node.val);
+                if(node.left!=null){
+                    queue.offer(node.left);
+                }
+
+                if(node.right!=null){
+                    queue.offer(node.right);
+                }
+                size--;
+
+            }
+            res.add(list);
+        }
+        return res;
+    }
+
 
 
 }
